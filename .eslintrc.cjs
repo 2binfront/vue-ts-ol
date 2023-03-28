@@ -3,11 +3,20 @@ module.exports = {
     browser: true,
     es2020: true
   },
-  extends: ['plugin:vue/vue3-essential', 'standard-with-typescript', 'plugin:prettier/recommended'],
+  extends: [
+    'plugin:vue/vue3-essential',
+    'standard-with-typescript',
+    'prettier',
+    'plugin:prettier/recommended'
+  ],
   overrides: [],
   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module'
+    parser: '@typescript-eslint/parser',
+    ecmaVersion: 2020,
+    sourceType: 'module',
+    ecmaFeatures: {
+      jsx: true
+    }
   },
   plugins: ['vue'],
   rules: {
