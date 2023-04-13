@@ -1,8 +1,8 @@
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import AutoImport from 'unplugin-auto-import/vite'
-import Components from 'unplugin-vue-components/vite'
-import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
+import AutoImport from 'unplugin-auto-import/vite';
+import Components from 'unplugin-vue-components/vite';
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
 import Unocss from 'unocss/vite';
 import {
   presetAttributify,
@@ -12,16 +12,24 @@ import {
   transformerVariantGroup
 } from 'unocss';
 
+import * as path from 'path';
+
 // https://vitejs.dev/config/
 export default defineConfig({
+  resolve: {
+    //设置别名
+    alias: {
+      '@': path.resolve(__dirname, 'src')
+    }
+  },
   plugins: [
     vue(),
-    
+
     AutoImport({
-      resolvers: [ElementPlusResolver()],
+      resolvers: [ElementPlusResolver()]
     }),
     Components({
-      resolvers: [ElementPlusResolver()],
+      resolvers: [ElementPlusResolver()]
     }),
     Unocss({
       presets: [
@@ -49,7 +57,10 @@ export default defineConfig({
         ['icon-color', { color: '#999999' }] //图标字体颜色
       ],
       transformers: [transformerDirectives(), transformerVariantGroup()]
-    }),
-  ],
-  
-})
+    })
+  ]
+  //暴露网络接口
+  // server: {
+  //   host:'0.0.0.0'
+  // }
+});
