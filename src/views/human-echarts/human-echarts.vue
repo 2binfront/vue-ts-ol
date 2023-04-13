@@ -6,9 +6,10 @@
   const chartDom = ref();
 
   const initCharts = () => {
+    console.log(chartDom.value.offsetHeight);
     const myChart = echarts.init(chartDom.value);
     // myChart.showLoading();
-    echarts.registerMap('HK', eg);
+    echarts.registerMap('HK', eg as any);
     // myChart.hideLoading();
     const option = {
       title: {
