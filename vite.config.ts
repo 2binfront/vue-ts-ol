@@ -11,7 +11,7 @@ import {
   transformerDirectives,
   transformerVariantGroup
 } from 'unocss';
-
+import cesium from 'vite-plugin-cesium';
 import * as path from 'path';
 
 // https://vitejs.dev/config/
@@ -24,7 +24,7 @@ export default defineConfig({
   },
   plugins: [
     vue(),
-
+    cesium(),
     AutoImport({
       resolvers: [ElementPlusResolver()]
     }),

@@ -5,7 +5,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/',
     name: 'IndexPage',
     meta: {
-      title: '首页',
+      title: '首页'
     },
     component: () => import('@/views/index.vue')
     // redirect: '/request'
@@ -22,9 +22,13 @@ const routes: Array<RouteRecordRaw> = [
     path: '/human-map',
     component: () => import('@/views/human-map/human-map.vue')
   },
-    {
+  {
     path: '/human-echarts',
     component: () => import('@/views/human-echarts/human-echarts.vue')
+  },
+  {
+    path: '/human-cesium',
+    component: () => import('@/views/human-cesium/human-cesium.vue')
   }
 ];
 
