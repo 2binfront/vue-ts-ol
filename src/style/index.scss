@@ -5,3 +5,17 @@ body {
   -moz-osx-font-smoothing: grayscale;
   margin: 0;
 }
+
+ul,
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+
+  color: #000000;
+  &:hover {
+    color: blue;
+  }
+}

@@ -77,7 +77,7 @@
 
 <style lang="scss" scoped>
   #pieChart {
-    width: 121px;
-    height: 121px;
+    width: 500px;
+    height: 500px;
   }
 </style>

@@ -4,6 +4,8 @@
 
 <template>
   <div full frb flex-col relative>
+    <router-link to="/" absolute style="top: 0; left: 0">返回主页</router-link>
+
     <div class="header w-full frc">
       <span style="font-weight: 600; font-size: large">中国省际人口迁移时空演化</span>
     </div>
@@ -22,7 +24,7 @@
   }
 
   .header {
-    height: 60px;
+    height: 3rem;
     border-bottom: 1px solid #f3f3f3;
   }
 
