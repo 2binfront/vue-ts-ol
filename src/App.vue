@@ -2,7 +2,7 @@
 
 <template>
   <!-- <el-config-provider :locale="locale"> -->
-  <RouterView />
+  <RouterView style="height: 100vh; width: 100vw" />
   <!-- </el-config-provider> -->
 </template>
 
