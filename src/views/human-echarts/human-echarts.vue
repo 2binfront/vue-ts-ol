@@ -38,66 +38,66 @@
     { name: '新疆维吾尔自治区', value: 806.98 }
   ];
 
-  const randomPieSeries = (center, radius) => {
-    const data = [
-      '北京市',
-      '天津市',
-      '河北省',
-      '山西省',
-      '内蒙古自治区',
-      '辽宁省',
-      '吉林省',
-      '黑龙江省',
-      '上海市',
-      '江苏省',
-      '浙江省',
-      '安徽省',
-      '福建省',
-      '江西省',
-      '山东省',
-      '河南省',
-      '湖北省',
-      '湖南省',
-      '广东省',
-      '广西壮族自治区',
-      '海南省',
-      '重庆市',
-      '四川省',
-      '贵州省',
-      '云南省',
-      '西藏自治区',
-      '陕西省',
-      '甘肃省',
-      '青海省',
-      '宁夏回族自治区',
-      '新疆维吾尔自治区',
-      '台湾省',
-      '香港特别行政区',
-      '澳门特别行政区'
-    ].map((t) => {
-      return {
-        value: Math.round(Math.random() * 100),
-        name: 'Category ' + t
-      };
-    });
-    return {
-      type: 'pie',
-      coordinateSystem: 'geo',
-      tooltip: {
-        formatter: '{b}: {c} ({d}%)'
-      },
-      label: {
-        show: false
-      },
-      labelLine: {
-        show: false
-      },
-      animationDuration: 0,
-      radius,
-      center,
-      data
-    };
-  };
+  // const randomPieSeries = (center, radius) => {
+  //   const data = [
+  //     '北京市',
+  //     '天津市',
+  //     '河北省',
+  //     '山西省',
+  //     '内蒙古自治区',
+  //     '辽宁省',
+  //     '吉林省',
+  //     '黑龙江省',
+  //     '上海市',
+  //     '江苏省',
+  //     '浙江省',
+  //     '安徽省',
+  //     '福建省',
+  //     '江西省',
+  //     '山东省',
+  //     '河南省',
+  //     '湖北省',
+  //     '湖南省',
+  //     '广东省',
+  //     '广西壮族自治区',
+  //     '海南省',
+  //     '重庆市',
+  //     '四川省',
+  //     '贵州省',
+  //     '云南省',
+  //     '西藏自治区',
+  //     '陕西省',
+  //     '甘肃省',
+  //     '青海省',
+  //     '宁夏回族自治区',
+  //     '新疆维吾尔自治区',
+  //     '台湾省',
+  //     '香港特别行政区',
+  //     '澳门特别行政区'
+  //   ].map((t) => {
+  //     return {
+  //       value: Math.round(Math.random() * 100),
+  //       name: 'Category ' + t
+  //     };
+  //   });
+  //   return {
+  //     type: 'pie',
+  //     coordinateSystem: 'geo',
+  //     tooltip: {
+  //       formatter: '{b}: {c} ({d}%)'
+  //     },
+  //     label: {
+  //       show: false
+  //     },
+  //     labelLine: {
+  //       show: false
+  //     },
+  //     animationDuration: 0,
+  //     radius,
+  //     center,
+  //     data
+  //   };
+  // };
 
   const initCharts = () => {
     console.log(chartDom.value.offsetHeight);
@@ -228,6 +228,9 @@
     };
 
     myChart.setOption(option);
+    myChart.on('click', (param) => {
+      console.log('output->param.name', param.name);
+    });
     window.addEventListener('resize', function () {
       myChart.resize();
     });
@@ -282,7 +285,7 @@
         ]"
       ></pieChart
     ></div>
-    <div class="human-charts" ref="chartDom"> </div>
+    <div ref="chartDom" class="human-charts"> </div>
   </div>
 </template>
 
