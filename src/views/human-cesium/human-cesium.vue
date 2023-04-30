@@ -24,17 +24,12 @@
 </script>
 
 <template>
-  <div>
-    <router-link to="/" absolute style="top: 0; left: 0; z-index: 10; color: #fff"
-      >返回主页</router-link
-    >
-    <div ref="cesiumRef" class="cesiumContainer"> </div>
-  </div>
+  <div ref="cesiumRef" class="cesiumContainer" full> </div>
 </template>
 
 <style lang="scss" scoped>
   .cesiumContainer {
-    width: 100vw;
-    height: 100vh;
+    // width: 100vw;
+    // height: 100vh;
   }
 </style>

@@ -72,12 +72,12 @@
 </script>
 
 <template>
-  <div id="pieChart" ref="Chart" flex-1> </div>
+  <div full frc> <div id="pieChart" ref="Chart"> </div> </div>
 </template>
 
 <style lang="scss" scoped>
   #pieChart {
-    width: 500px;
     height: 500px;
+    width: 500px;
   }
 </style>

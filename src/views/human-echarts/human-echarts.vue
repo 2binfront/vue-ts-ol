@@ -37,7 +37,39 @@
     { name: '宁夏回族自治区', value: 806.98 },
     { name: '新疆维吾尔自治区', value: 806.98 }
   ];
-
+  const colorSet = [
+    '#5bb181',
+    '#59ce77',
+    '#70de68',
+    '#389554',
+    '#195142',
+    '#1bf84a',
+    '#10d2bd',
+    '#e1ff7d',
+    '#f3bd03',
+    '#fef654',
+    '#5bb181',
+    '#59ce77',
+    '#70de68',
+    '#389554',
+    '#195142',
+    '#1bf84a',
+    '#10d2bd',
+    '#e1ff7d',
+    '#f3bd03',
+    '#fef654',
+    '#5bb181',
+    '#59ce77',
+    '#70de68',
+    '#389554',
+    '#195142',
+    '#1bf84a',
+    '#10d2bd',
+    '#e1ff7d',
+    '#f3bd03',
+    '#fef654',
+    '#5bb181'
+  ];
   // const randomPieSeries = (center, radius) => {
   //   const data = [
   //     '北京市',
@@ -243,59 +275,15 @@
 
 <template>
   <div class="chart-container" frc full>
-    <!-- <pieChart></pieChart> -->
-    <div h-full frc relative b-r>
-      <router-link to="/" absolute style="top: 0; left: 0">返回主页</router-link>
-      <pieChart
-        flex-1
-        full
-        :dataset="testData"
-        :color-set="[
-          '#5bb181',
-          '#59ce77',
-          '#70de68',
-          '#389554',
-          '#195142',
-          '#1bf84a',
-          '#10d2bd',
-          '#e1ff7d',
-          '#f3bd03',
-          '#fef654',
-          '#5bb181',
-          '#59ce77',
-          '#70de68',
-          '#389554',
-          '#195142',
-          '#1bf84a',
-          '#10d2bd',
-          '#e1ff7d',
-          '#f3bd03',
-          '#fef654',
-          '#5bb181',
-          '#59ce77',
-          '#70de68',
-          '#389554',
-          '#195142',
-          '#1bf84a',
-          '#10d2bd',
-          '#e1ff7d',
-          '#f3bd03',
-          '#fef654',
-          '#5bb181'
-        ]"
-      ></pieChart
-    ></div>
-    <div ref="chartDom" class="human-charts"> </div>
+    <div b-r frc> <pieChart :dataset="testData" :color-set="colorSet"></pieChart></div>
+    <div flex-1>
+      <div ref="chartDom" class="human-charts"> </div>
+    </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
   .chart-container {
-    overflow: auto;
-  }
-  .human-charts {
-    height: 100%;
-    width: 100%;
-    flex: 1 1 0%;
+    // overflow: auto;
   }
 </style>
