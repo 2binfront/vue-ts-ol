@@ -12,8 +12,10 @@
   import { Layer } from 'ol/layer';
   import { Point } from 'ol/geom';
   import { Coordinate } from 'ol/coordinate';
-  import CurvesLayer from 'ol-dynamic-curves';
+  // import CurvesLayer from 'ol-dynamic-curves';
   import { dataTest } from '@/views/human-map/calc';
+  import { StyleLike } from 'ol/style/Style';
+  import { transform } from 'ol/proj';
 
   const map = ref();
   const areaUrl2 = 'src/assets/中华人民共和国.json';
@@ -128,7 +130,7 @@
       name: 'baseImg',
       source: edgeSource
     });
-    const styleHighlightFunc = (f: Feature) => {
+    const styleHighlightFunc = (f: Feature): StyleLike => {
       const highlightText = f.get('name');
       const highlightStyle = allStyles.highlightEdge;
       highlightStyle.getText().setText(highlightText);
@@ -139,9 +141,9 @@
       target: map.value,
       layers: [countryEdge], // 设置视图
       view: new View({
-        projection: 'EPSG:4326', // 坐标系
-        // center: transform([100, 32], 'EPSG:4326', 'EPSG:3857'), // 中心点坐标
-        center: [105, 32], // 中心点坐标
+        projection: 'EPSG:3857', // 坐标系
+        center: transform([100, 32], 'EPSG:4326', 'EPSG:3857'), // 中心点坐标
+        // center: [105, 32], // 中心点坐标
         zoom: 5 // 缩放等级
       })
     });
@@ -155,7 +157,7 @@
 
       const centroid = p.properties.centroid ? p.properties.centroid : p.properties.center;
       const pFeature = new Feature({
-        geometry: new Point(centroid as Coordinate),
+        geometry: new Point(transform(centroid as Coordinate, 'EPSG:4326', 'EPSG:3857')),
         name
       });
       const pStyle = new Style({
@@ -171,16 +173,12 @@
         }),
         text: new Text({
           font: '12px 400 Calibri,sans-serif',
-          // fill: new Fill({
-          //   color: 'grey'
-          // }),
           stroke: new Stroke({
-            color: 'grey',
+            color: '#fafafa',
             width: 0.5
           }),
           textBaseline: 'hanging',
           offsetY: -14
-          // padding: [10, 0, 0, 0]
         }),
         zIndex: Infinity
       });
@@ -188,11 +186,8 @@
         pStyle.setText(
           new Text({
             font: '12px Calibri,sans-serif',
-            fill: new Fill({
-              color: 'grey'
-            }),
             stroke: new Stroke({
-              color: 'grey',
+              color: '#f1f1f1',
               width: 1
             }),
             textBaseline: 'hanging',
@@ -204,14 +199,12 @@
         pStyle.setText(
           new Text({
             font: '12px Calibri,sans-serif',
-            fill: new Fill({
-              color: 'grey'
-            }),
             stroke: new Stroke({
-              color: 'grey',
+              color: '#f1f1f1',
               width: 1
             }),
-            textBaseline: 'hanging'
+            textBaseline: 'hanging',
+            offsetY: -14
           })
         );
       }
@@ -221,7 +214,7 @@
       console.log(pFeature.getStyle());
     }
 
-    // 点击高亮的overlay
+    //点击高亮的overlay
     const featureOverlay = new VectorImageLayer({
       source: new VectorSource(),
       map: map.value,
@@ -229,21 +222,9 @@
     });
 
     // 曲线
-    const curves = new CurvesLayer({
-      map: map.value
-    });
-    // curves.addCurves([
-    //   [
-    //     [140.8, 15.9],
-    //     [151.498262, -18.690718]
-    //   ],
-    //   [
-    //     [140.8, 15.9],
-    //     [152.498262, -18.690718]
-    //   ]
-    // ]);
-    // curves.refreshCurvesCoords();
-
+    // const curves = new CurvesLayer({
+    //   map: map.value
+    // });
     // 高亮操作
     let highlight: any;
     const displayFeatureInfo = (pixel: Pixel) => {
