@@ -274,11 +274,13 @@
 </script>
 
 <template>
-  <div class="chart-container" frc full>
-    <div b-r frc> <pieChart :dataset="testData" :color-set="colorSet"></pieChart></div>
-    <div flex-1>
-      <div ref="chartDom" class="human-charts"> </div>
+  <div class="chart-container" flex full>
+    <div b-r frc flex-col class="w-[40%] h-[calc(100vh-49px)]">
+      <pieChart :dataset="testData" :color-set="colorSet"></pieChart>
+      <!-- <pieChart :dataset="testData" :color-set="colorSet"></pieChart> -->
     </div>
+
+    <div ref="chartDom" class="human-charts h-[calc(100vh-49px)]" flex-1> </div>
   </div>
 </template>
 

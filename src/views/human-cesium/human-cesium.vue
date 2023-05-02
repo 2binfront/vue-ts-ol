@@ -29,12 +29,12 @@
 </script>
 
 <template>
-  <div ref="cesiumRef" class="cesiumContainer" full> </div>
+  <div ref="cesiumRef" class="cesiumContainer"> </div>
 </template>
 
 <style lang="scss" scoped>
   .cesiumContainer {
-    // width: 100vw;
-    // height: 100vh;
+    width: 100vw;
+    height: calc(100vh - 49px);
   }
 </style>
