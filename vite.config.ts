@@ -58,9 +58,9 @@ export default defineConfig({
       ],
       transformers: [transformerDirectives(), transformerVariantGroup()]
     })
-  ],
+  ]
   //暴露网络接口
-  server: {
-    host: '0.0.0.0'
-  }
+  // server: {
+  //   host: '0.0.0.0'
+  // }
 });
