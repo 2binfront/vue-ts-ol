@@ -72,7 +72,7 @@
 </script>
 
 <template>
-  <div full frc> <div id="pieChart" ref="Chart"> </div> </div>
+  <div full frc pl pr box-border> <div id="pieChart" ref="Chart"> </div> </div>
 </template>
 
 <style lang="scss" scoped>

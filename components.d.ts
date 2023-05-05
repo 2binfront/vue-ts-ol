@@ -10,8 +10,6 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
-    ElStep: typeof import('element-plus/es')['ElStep']
-    ElTimelineItem: typeof import('element-plus/es')['ElTimelineItem']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     IconLeft1: typeof import('./src/components/icons/ol-map/iconLeft1.vue')['default']
     IconLeft2: typeof import('./src/components/icons/ol-map/iconLeft2.vue')['default']

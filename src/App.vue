@@ -5,7 +5,7 @@
     <div class="header w-full frc">
       <router-link to="/" absolute style="left: 20px">返回主页</router-link>
 
-      <span style="font-weight: 600; font-size: large">中国省际人口迁移时空演化</span>
+      <span style="font-weight: 600; font-size: large">中国省际人口迁移时空演化（2000-2020）</span>
     </div>
     <RouterView />
   </el-config-provider>
