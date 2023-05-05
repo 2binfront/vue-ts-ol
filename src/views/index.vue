@@ -1,7 +1,7 @@
 <script lang="ts" setup></script>
 
 <template>
-  <nav flex flex-col>
+  <nav flex flex-col full>
     <div class="router-test">
       <span font-600>Router Test</span>
       <ul>
@@ -25,9 +25,7 @@
 
 <style lang="scss" scoped>
   nav {
-    margin: 1rem;
-  }
-  span {
-    // line-height: 40px;
+    box-sizing: border-box;
+    padding: 1rem;
   }
 </style>
