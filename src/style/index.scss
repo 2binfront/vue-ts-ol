@@ -1,3 +1,44 @@
+:root {
+  // --ep-color-primary: red;
+  font-size: 12px;
+  --el-bg-color: #fff;
+  --hover: #3a36db;
+  --text-color: #747474;
+  --bg-switch0: #999999;
+  --bg-switch1: #3a36db;
+  --bread-text: #606266;
+
+  --step-process-bg: #3a36db;
+  --step-success: #00cb29;
+  --step-title: #3d3d3d;
+  --step-desc: #747474;
+  --step-wait-bg: #f9f9f9;
+  --step-wait-br: #747474;
+
+  --tabs-bg: #f3f3f3;
+  --tabs-br: #f3f3f3;
+}
+
+:root.dark {
+  /* 自定义深色背景颜色 */
+  --el-bg-color: #323232;
+  --text-color: #fff;
+  --bread-text: #fff;
+  --hover: #797cff;
+  --bg-switch0: #999999;
+  --bg-switch1: #797cff;
+
+  --step-process-bg: #797cff;
+  --step-wait-bg: #2a2a2a;
+  --step-wait-br: #707070;
+  --step-desc: #c5c5c5;
+  --step-title: #fff;
+
+  --tabs-bg: #2a2a2a;
+  --tabs-text: #ffffff;
+  --tabs-br: #707070;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, PingFang SC, Microsoft YaHei,
     Source Han Sans SC, Noto Sans CJK SC, WenQuanYi Micro Hei, sans-serif;

@@ -11,6 +11,14 @@
         <li mb> <router-link to="/human-map">跳转到人口迁移流展示-></router-link> </li>
         <li mb> <router-link to="/human-cesium">跳转到人口迁移3D地图-></router-link> </li>
       </ul>
+      <Breadcrumb :fullpath="'components-test/bread/test'" />
+      <Steps :active="1" absolute class="top-[100px]" style="width: 600px">
+        <el-step title="step1" description="hello"></el-step>
+        <el-step title="step2" description="hello"></el-step>
+        <el-step title="step3" description="hello"></el-step>
+        <el-step title="step4" description="hello"></el-step>
+      </Steps>
+      <!-- <Tabs absolute class="top-[100px]" editable> </Tabs> -->
     </div>
   </nav>
 </template>
