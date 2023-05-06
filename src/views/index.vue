@@ -1,4 +1,11 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+  // import { Breadcrumb, Steps, Tabs, FormSwitch } from '@/BlueWhaleUI';
+  import { useDarkStore } from '@/store/dark';
+  // import BlueWhaleUI from '@/BlueWhaleUI/components/integration';
+  // import { FormSwitch, Steps } from 'hhbluewhale-ui';
+
+  const darkmode = useDarkStore();
+</script>
 
 <template>
   <nav flex flex-col full>
@@ -11,14 +18,27 @@
         <li mb> <router-link to="/human-map">跳转到人口迁移流展示-></router-link> </li>
         <li mb> <router-link to="/human-cesium">跳转到人口迁移3D地图-></router-link> </li>
       </ul>
-      <Breadcrumb :fullpath="'components-test/bread/test'" />
-      <Steps :active="1" absolute class="top-[100px]" style="width: 600px">
-        <!-- <el-step title="step1" description="hello"></el-step>
+      <breadcrumb :fullpath="'components-test/bread/test'" />
+      <Steps :active="1" absolute class="top-[200px]" style="width: 600px">
+        <el-step title="step1" description="hello"></el-step>
         <el-step title="step2" description="hello"></el-step>
         <el-step title="step3" description="hello"></el-step>
-        <el-step title="step4" description="hello"></el-step> -->
+        <el-step title="step4" description="hello"></el-step>
       </Steps>
-      <!-- <Tabs absolute class="top-[100px]" editable> </Tabs> -->
+      <steps :active="1" absolute class="top-[400px]" style="width: 600px">
+        <el-step title="step1" description="hello"></el-step>
+        <el-step title="step2" description="hello"></el-step>
+        <el-step title="step3" description="hello"></el-step>
+        <el-step title="step4" description="hello"></el-step>
+      </steps>
+      <Tabs absolute class="top-[300px]">
+        <el-tab-pane label="User" name="first">User</el-tab-pane>
+        <el-tab-pane label="Config" name="second">Config</el-tab-pane>
+        <el-tab-pane label="Role" name="third">Role</el-tab-pane>
+        <el-tab-pane label="Task" name="fourth">Task</el-tab-pane></Tabs
+      >
+      <!-- <switch v-model:value="darkmode.isDark" /> -->
+      <Switch v-model:value="darkmode.isDark" />
     </div>
   </nav>
 </template>

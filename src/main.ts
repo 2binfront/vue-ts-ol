@@ -6,7 +6,8 @@ import './style/index.scss';
 import { createPinia } from 'pinia';
 import router from '@/router';
 
-import BlueWhaleUI from 'hhbluewhale-ui';
+// import BlueWhaleUI from 'hhbluewhale-ui';
+import BlueWhaleUI from 'bw-cowave-ui';
 
 const app = createApp(App);
 app.use(ElementPlus);
