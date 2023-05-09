@@ -26,7 +26,7 @@
           <el-radio-button label="out">迁出</el-radio-button>
         </el-radio-group>
       </div>
-      <div frc absolute style="right: 10px; bottom: 20px">
+      <div frc absolute style="right: 10%; bottom: 15px">
         <el-radio-group v-model="timeline" size="small" style="z-index: 100" @change="timeChange">
           <el-radio-button label="2000">1995-2000</el-radio-button>
           <el-radio-button label="2005">2000-2005</el-radio-button>

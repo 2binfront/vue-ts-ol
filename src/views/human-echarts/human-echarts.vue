@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import * as echarts from 'echarts';
-  import { onMounted, ref, toRaw, watch, nextTick, computed } from 'vue';
+  import { onMounted, ref, toRaw, watch, nextTick } from 'vue';
   import eg from '@/assets/中华人民共和国.json';
   // import data2020 from '@/assets/data/2020.json';
 
@@ -151,6 +151,9 @@
           max: 10
         },
         emphasis: {
+          itemStyle: {
+            areaColor: '#f3f3f3'
+          },
           label: {
             show: true
           }
@@ -237,6 +240,9 @@
               max: 10
             },
             emphasis: {
+              itemStyle: {
+                areaColor: '#f3f3f3'
+              },
               label: {
                 show: true
               }
@@ -322,7 +328,7 @@
 
 <template>
   <div class="chart-container" flex full>
-    <div b-r frc flex-col class="w-[40%] h-[calc(100vh-49px)]">
+    <div b-r frc flex-col class="w-[50%] h-[calc(100vh-49px)]">
       <pieChart :color-set="colorSet"></pieChart>
       <!-- <pieChart :dataset="testData" :color-set="colorSet"></pieChart> -->
     </div>

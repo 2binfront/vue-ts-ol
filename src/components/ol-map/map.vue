@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import { Feature, Map, View } from 'ol';
-  import { onMounted, ref } from 'vue';
+  import { onMounted, ref, toRaw } from 'vue';
   // import VectorLayer from 'ol/layer/Vector';
   import VectorSource from 'ol/source/Vector';
   import GeoJSON from 'ol/format/GeoJSON.js';
@@ -243,7 +243,8 @@
       );
       // const feature = map.value.getFeaturesAtPixel(pixel)[0];
       if (feature) {
-        // console.log(feature.get('name'));
+        console.log(feature.get('name'));
+        console.log(toRaw(feature.get('center')));
         mapInfo.curCity = feature.get('name');
       } else {
         mapInfo.curCity = 0;

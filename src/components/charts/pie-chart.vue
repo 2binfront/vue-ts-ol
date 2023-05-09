@@ -40,25 +40,24 @@
       {
         name: 'Access From',
         type: 'pie',
-        radius: [props.radius ? props.radius : 17, '100%'],
+        radius: [props.radius ? props.radius : 17, '70%'],
         itemStyle: {
           borderRadius: 1,
           borderColor: '#fff',
           borderWidth: 2
         },
         label: {
-          show: false
+          show: true
         },
-
-        hoverAnimation: false
+        labelLayout: {
+          hideOverlap: false
+        }
       }
     ],
     // color: props.colorSet ? props.colorSet : ['#e6584f', '#f79045', '#8e9aff', '#3ac096'],
     title: {
       text: `${CITIES[mapStore.curCity]}人口迁${mapStore.isIn ? '入' : '出'}概览`,
-      subtextStyle: {
-        align: 'center'
-      }
+      x: 'center'
     }
   };
   watch(
@@ -83,24 +82,24 @@
           {
             name: 'Access From',
             type: 'pie',
-            radius: [props.radius ? props.radius : 17, '100%'],
+            radius: [props.radius ? props.radius : 17, '70%'],
             itemStyle: {
               borderRadius: 1,
               borderColor: '#fff',
               borderWidth: 2
             },
             label: {
-              show: false
+              show: true
             },
-            hoverAnimation: false
+            labelLayout: {
+              hideOverlap: false
+            }
           }
         ],
         // color: props.colorSet ? props.colorSet : ['#e6584f', '#f79045', '#8e9aff', '#3ac096'],
         title: {
           text: `${CITIES[mapStore.curCity]}人口迁${mapStore.isIn ? '入' : '出'}概览`,
-          subtextStyle: {
-            align: 'center'
-          }
+          x: 'center'
         }
       };
       dataChart.value!.setOption(option);
@@ -124,7 +123,7 @@
 
 <style lang="scss" scoped>
   #pieChart {
-    height: 500px;
-    width: 500px;
+    height: 700px;
+    width: 700px;
   }
 </style>

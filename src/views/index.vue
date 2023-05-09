@@ -13,6 +13,7 @@
         <li> <router-link to="/point-test">跳转到point-test</router-link> </li> -->
         <li mb> <router-link to="/human-echarts">跳转到人口迁移图表-></router-link> </li>
         <li mb> <router-link to="/human-map">跳转到人口迁移流展示-></router-link> </li>
+        <li mb> <router-link to="/human-map-loca">跳转到loka人口迁移流展示-></router-link> </li>
         <li mb> <router-link to="/human-cesium">跳转到人口迁移3D地图-></router-link> </li>
       </ul>
       <!-- <breadcrumb :fullpath="'components-test/bread/test'" />
