@@ -1,44 +1,13 @@
 <script lang="ts" setup>
   import * as echarts from 'echarts';
-  import { onMounted, ref } from 'vue';
+  import { onMounted, ref, toRaw, watch, nextTick, computed } from 'vue';
   import eg from '@/assets/中华人民共和国.json';
-  import data2020 from '@/assets/data/2020.json';
+  // import data2020 from '@/assets/data/2020.json';
+
+  import { useMapInfoStore } from '@/store/mapInfo';
 
   const chartDom = ref();
 
-  const testData = [
-    { name: '北京市', value: 20057.34 },
-    { name: '天津市', value: 15477.48 },
-    { name: '河北省', value: 31686.1 },
-    { name: '山西省', value: 6992.6 },
-    { name: '内蒙古自治区', value: 44045.49 },
-    { name: '辽宁省', value: 40689.64 },
-    { name: '吉林省', value: 37659.78 },
-    { name: '黑龙江省', value: 45180.97 },
-    { name: '上海市', value: 55204.26 },
-    { name: '江苏省', value: 21900.9 },
-    { name: '浙江省', value: 4918.26 },
-    { name: '安徽省', value: 5881.84 },
-    { name: '福建省', value: 4178.01 },
-    { name: '江西省', value: 2227.92 },
-    { name: '山东省', value: 2180.98 },
-    { name: '河南省', value: 9172.94 },
-    { name: '湖北省', value: 3368 },
-    { name: '湖南省', value: 806.98 },
-    { name: '广东省', value: 806.98 },
-    { name: '广西壮族自治区', value: 806.98 },
-    { name: '海南省', value: 806.98 },
-    { name: '重庆市', value: 806.98 },
-    { name: '四川省', value: 806.98 },
-    { name: '贵州省', value: 806.98 },
-    { name: '云南省', value: 806.98 },
-    { name: '西藏自治区', value: 806.98 },
-    { name: '陕西省', value: 806.98 },
-    { name: '甘肃省', value: 806.98 },
-    { name: '青海省', value: 806.98 },
-    { name: '宁夏回族自治区', value: 806.98 },
-    { name: '新疆维吾尔自治区', value: 806.98 }
-  ];
   const colorSet = [
     '#5bb181',
     '#59ce77',
@@ -72,6 +41,8 @@
     '#fef654',
     '#5bb181'
   ];
+  const mapStore = useMapInfoStore();
+
   // const randomPieSeries = (center, radius) => {
   //   const data = [
   //     '北京市',
@@ -132,111 +103,218 @@
   //     data
   //   };
   // };
-
+  let option = {
+    title: {
+      subtext: '数据来源于中国国家统计局',
+      sublink: 'http://www.stats.gov.cn/'
+    },
+    tooltip: {
+      trigger: 'item',
+      formatter: '{b}<br/>{c} 人'
+    },
+    toolbox: {
+      show: true,
+      orient: 'vertical',
+      left: 'right',
+      top: 'center',
+      feature: {
+        dataView: { readOnly: false },
+        restore: {},
+        saveAsImage: {}
+      }
+    },
+    visualMap: {
+      min: 100,
+      max: 100000,
+      text: ['High', 'Low'],
+      realtime: false,
+      calculable: true,
+      inRange: {
+        color: ['lightskyblue', 'yellow', 'orangered']
+      }
+    },
+    dataset: {
+      dimensiosns: ['name', 'value'],
+      source: toRaw(mapStore.curChart)
+    },
+    series: [
+      {
+        name: '中国省级人口迁移总览',
+        type: 'map',
+        map: 'China',
+        selectedMode: 'single',
+        roam: true, // 是否开启平移或缩放
+        // zoom: 1, // 当前视角的缩放比例
+        scaleLimit: {
+          // 滚轮缩放的极限控制
+          min: 1,
+          max: 10
+        },
+        emphasis: {
+          label: {
+            show: true
+          }
+        }
+      }
+      // randomPieSeries(eg.features[1].properties.center, 10)
+    ]
+  };
   const initCharts = () => {
-    console.log(chartDom.value.offsetHeight);
     const myChart = echarts.init(chartDom.value);
     echarts.registerMap('China', eg as any);
-    const option = {
-      title: {
-        // text: 'Interprovincial Population Migration in China （2000-2020）',
-        // text: '中国省际人口迁移时空演化（2000-2020）',
-        // subtext: 'Data from National Bureau of Statistics of China',
-        subtext: '数据来源于中国国家统计局',
-        sublink: 'http://www.stats.gov.cn/'
-      },
-      tooltip: {
-        trigger: 'item',
-        formatter: '{b}<br/>{c} 人'
-      },
-
-      zoom: 1, // 当前视角的缩放比例
-      roam: true, // 是否开启平游或缩放
-      scaleLimit: {
-        // 滚轮缩放的极限控制
-        min: 1,
-        max: 10
-      },
-      toolbox: {
-        show: true,
-        orient: 'vertical',
-        left: 'right',
-        top: 'center',
-        feature: {
-          dataView: { readOnly: false },
-          restore: {},
-          saveAsImage: {}
-        }
-      },
-      visualMap: {
-        min: 100,
-        max: 200000,
-        text: ['High', 'Low'],
-        realtime: false,
-        calculable: true,
-        inRange: {
-          color: ['lightskyblue', 'yellow', 'orangered']
-        }
-      },
-      series: [
-        {
-          name: '中国省级人口迁移总览',
-          type: 'map',
-          map: 'China',
-          emphasis: {
-            label: {
-              show: true
-            }
-          },
-          // 北京市	NaN
-          // 天津市	NaN
-          // 河北省	NaN
-          // 山西省	NaN
-          // 内蒙古自治区	NaN
-          // 辽宁省	NaN
-          // 吉林省	NaN
-          // 黑龙江省	NaN
-          // 上海市	NaN
-          // 江苏省	NaN
-          // 浙江省	NaN
-          // 安徽省	NaN
-          // 福建省	NaN
-          // 江西省	NaN
-          // 山东省	NaN
-          // 河南省	NaN
-          // 湖北省	NaN
-          // 湖南省	NaN
-          // 广东省	NaN
-          // 广西壮族自治区	NaN
-          // 海南省	NaN
-          // 重庆市	NaN
-          // 四川省	NaN
-          // 贵州省	NaN
-          // 云南省	NaN
-          // 西藏自治区	NaN
-          // 陕西省	NaN
-          // 甘肃省	NaN
-          // 青海省	NaN
-          // 宁夏回族自治区	NaN
-          // 新疆维吾尔自治区	NaN
-          // 台湾省	NaN
-          // 香港特别行政区	NaN
-          // 澳门特别行政区	NaN
-          data: testData
-        }
-        // randomPieSeries(eg.features[1].properties.center, 10)
-      ]
-    };
 
     myChart.setOption(option);
-    myChart.on('click', (param) => {
-      console.log('output->param.name', param.name);
+    // myChart.on('click', (param) => {
+    //   console.log('output->param.name', param.name);
+    // });
+    // myChart.on('georoam', () => {
+    //   console.log('hello roam');
+    // });
+    myChart.on('selectchanged', (param: any) => {
+      //param.selected[0].dataIndex[0]
+      const index = param.selected[0] && param.selected[0].dataIndex[0];
+      // console.log(index);
+      mapStore.setCity(index);
+      myChart.dispose();
+      // initCharts();
+
+      // myChart.setOption(option, true);
+      // myChart.dispatchAction({ type: 'select', dataIndex: index });
     });
+
     window.addEventListener('resize', function () {
       myChart.resize();
     });
   };
+  watch(
+    () => mapStore.curChart,
+    () => {
+      option = {
+        title: {
+          subtext: '数据来源于中国国家统计局',
+          sublink: 'http://www.stats.gov.cn/'
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: '{b}<br/>{c} 人'
+        },
+        toolbox: {
+          show: true,
+          orient: 'vertical',
+          left: 'right',
+          top: 'center',
+          feature: {
+            dataView: { readOnly: false },
+            restore: {},
+            saveAsImage: {}
+          }
+        },
+        visualMap: {
+          min: 100,
+          max: 100000,
+          text: ['High', 'Low'],
+          realtime: false,
+          calculable: true,
+          inRange: {
+            color: ['lightskyblue', 'yellow', 'orangered']
+          }
+        },
+        dataset: {
+          dimensiosns: ['name', 'value'],
+          source: toRaw(mapStore.curChart)
+        },
+        series: [
+          {
+            name: '中国省级人口迁移总览',
+            type: 'map',
+            map: 'China',
+            selectedMode: 'single',
+            roam: true, // 是否开启平移或缩放
+            // zoom: 1, // 当前视角的缩放比例
+            scaleLimit: {
+              // 滚轮缩放的极限控制
+              min: 1,
+              max: 10
+            },
+            emphasis: {
+              label: {
+                show: true
+              }
+            }
+          }
+          // randomPieSeries(eg.features[1].properties.center, 10)
+        ]
+      };
+      console.log('change');
+      // console.log(toRaw(mapStore.curChart));
+      nextTick(() => initCharts());
+    }
+  );
 
+  watch(
+    () => mapStore.isIn,
+    () => {
+      option = {
+        title: {
+          subtext: '数据来源于中国国家统计局',
+          sublink: 'http://www.stats.gov.cn/'
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: '{b}<br/>{c} 人'
+        },
+        toolbox: {
+          show: true,
+          orient: 'vertical',
+          left: 'right',
+          top: 'center',
+          feature: {
+            dataView: { readOnly: false },
+            restore: {},
+            saveAsImage: {}
+          }
+        },
+        visualMap: {
+          min: 100,
+          max: 100000,
+          text: ['High', 'Low'],
+          realtime: false,
+          calculable: true,
+          inRange: {
+            color: ['lightskyblue', 'yellow', 'orangered']
+          }
+        },
+        dataset: {
+          dimensiosns: ['name', 'value'],
+          source: toRaw(mapStore.curChart)
+        },
+        series: [
+          {
+            name: '中国省级人口迁移总览',
+            type: 'map',
+            map: 'China',
+            selectedMode: 'single',
+            roam: true, // 是否开启平移或缩放
+            // zoom: 1, // 当前视角的缩放比例
+            scaleLimit: {
+              // 滚轮缩放的极限控制
+              min: 1,
+              max: 10
+            },
+            emphasis: {
+              label: {
+                show: true
+              }
+            }
+          }
+          // randomPieSeries(eg.features[1].properties.center, 10)
+        ]
+      };
+      console.log('change');
+      // console.log(toRaw(mapStore.curChart));
+      nextTick(() => initCharts());
+    }
+  );
   onMounted(() => {
     initCharts();
   });
@@ -245,20 +323,16 @@
 <template>
   <div class="chart-container" flex full>
     <div b-r frc flex-col class="w-[40%] h-[calc(100vh-49px)]">
-      <pieChart
-        :dataset="testData"
-        :color-set="colorSet"
-        :title="{ text: '重庆人口迁移概览' }"
-      ></pieChart>
+      <pieChart :color-set="colorSet"></pieChart>
       <!-- <pieChart :dataset="testData" :color-set="colorSet"></pieChart> -->
     </div>
 
-    <div ref="chartDom" class="human-charts h-[calc(100vh-49px)]" flex-1> </div>
+    <div id="map" ref="chartDom" class="human-charts h-[calc(100vh-49px)]" flex-1> </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
   .chart-container {
-    // overflow: auto;
+    overflow: auto;
   }
 </style>

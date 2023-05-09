@@ -1,10 +1,7 @@
 <script lang="ts" setup>
   // import { Breadcrumb, Steps, Tabs, FormSwitch } from '@/BlueWhaleUI';
-  import { useDarkStore } from '@/store/dark';
   // import BlueWhaleUI from '@/BlueWhaleUI/components/integration';
   // import { FormSwitch, Steps } from 'hhbluewhale-ui';
-
-  const darkmode = useDarkStore();
 </script>
 
 <template>
@@ -18,7 +15,7 @@
         <li mb> <router-link to="/human-map">跳转到人口迁移流展示-></router-link> </li>
         <li mb> <router-link to="/human-cesium">跳转到人口迁移3D地图-></router-link> </li>
       </ul>
-      <breadcrumb :fullpath="'components-test/bread/test'" />
+      <!-- <breadcrumb :fullpath="'components-test/bread/test'" />
       <Steps :active="1" absolute class="top-[200px]" style="width: 600px">
         <el-step title="step1" description="hello"></el-step>
         <el-step title="step2" description="hello"></el-step>
@@ -36,9 +33,7 @@
         <el-tab-pane label="Config" name="second">Config</el-tab-pane>
         <el-tab-pane label="Role" name="third">Role</el-tab-pane>
         <el-tab-pane label="Task" name="fourth">Task</el-tab-pane></Tabs
-      >
-      <!-- <switch v-model:value="darkmode.isDark" /> -->
-      <Switch v-model:value="darkmode.isDark" />
+      > -->
     </div>
   </nav>
 </template>

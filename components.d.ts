@@ -10,6 +10,8 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
+    ElRadioButton: typeof import('element-plus/es')['ElRadioButton']
+    ElRadioGroup: typeof import('element-plus/es')['ElRadioGroup']
     ElStep: typeof import('element-plus/es')['ElStep']
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']

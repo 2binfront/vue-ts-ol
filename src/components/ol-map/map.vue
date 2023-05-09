@@ -13,13 +13,13 @@
   import { Point } from 'ol/geom';
   import { Coordinate } from 'ol/coordinate';
   // import CurvesLayer from 'ol-dynamic-curves';
-  import { dataTest } from '@/views/human-map/calc';
+  // import { dataTest } from '@/views/human-map/calc';
   import { StyleLike } from 'ol/style/Style';
   import { transform } from 'ol/proj';
 
   const map = ref();
   const areaUrl2 = 'src/assets/中华人民共和国.json';
-  dataTest();
+  // dataTest();
   const allStyles: any = {
     pointStyle: new Style({
       image: new CircleStyle({
@@ -211,7 +211,7 @@
       pStyle.getText().setText(name);
       pFeature.setStyle(pStyle);
       pointOverlay.getSource()!.addFeature(pFeature);
-      console.log(pFeature.getStyle());
+      // console.log(pFeature.getStyle());
     }
 
     //点击高亮的overlay
@@ -244,9 +244,9 @@
       // const feature = map.value.getFeaturesAtPixel(pixel)[0];
       if (feature) {
         // console.log(feature.get('name'));
-        // mapInfo.curCity = feature.get('name') || '&nbsp;';
+        mapInfo.curCity = feature.get('name');
       } else {
-        mapInfo.curCity = '&nbsp;';
+        mapInfo.curCity = 0;
       }
       if (feature !== highlight) {
         if (highlight) {
