@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia';
 import data2020 from '@/assets/data/2020.json';
-import data2015 from '@/assets/data/2010.json';
+import data2015 from '@/assets/data/2015.json';
 import data2010 from '@/assets/data/2010.json';
-import data2005 from '@/assets/data/2000.json';
+import data2005 from '@/assets/data/2005.json';
 import data2000 from '@/assets/data/2000.json';
 import { ref, toRaw } from 'vue';
 import { CITIES } from '@/types';
