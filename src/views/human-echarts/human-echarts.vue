@@ -42,6 +42,7 @@
     '#5bb181'
   ];
   const mapStore = useMapInfoStore();
+  const dimensiosns = ['name', 'value'];
 
   // const randomPieSeries = (center, radius) => {
   //   const data = [
@@ -108,6 +109,10 @@
       subtext: '数据来源于中国国家统计局',
       sublink: 'http://www.stats.gov.cn/'
     },
+    dataset: {
+      dimensiosns: ['name', 'value'],
+      source: toRaw(mapStore.curChart)
+    },
     tooltip: {
       trigger: 'item',
       formatter: '{b}<br/>{c} 人'
@@ -118,7 +123,41 @@
       left: 'right',
       top: 'center',
       feature: {
-        dataView: { readOnly: false },
+        dataView: {
+          readOnly: false
+          // optionToContent: (opt: any) => {
+          //   // return toRaw(mapStore.curChart);
+          //   // let source = toRaw(mapStore.curChart);
+          //   // let series = dimensiosns;
+          //   // let table =
+          //   //   '<table style="width:100%;text-align:center"><tbody><tr>' +
+          //   //   '<td>' +
+          //   //   series[0] +
+          //   //   '</td>' +
+          //   //   '<td>' +
+          //   //   series[1] +
+          //   //   '</td>' +
+          //   //   '</tr>';
+          //   // for (var i = 0, l = source.length; i < l; i++) {
+          //   //   table +=
+          //   //     '<tr>' +
+          //   //     '<td>' +
+          //   //     source[i][0] +
+          //   //     '</td>' +
+          //   //     '<td>' +
+          //   //     source[i][1] +
+          //   //     '</td>' +
+          //   //     '</tr>';
+          //   // }
+          //   // table += '</tbody></table>';
+          //   // return table;
+          //   // return JSON.stringify(toRaw(mapStore.curChart));
+          // }
+          // contentToOption: (container: HTMLElement, opt: any) => {
+          //   console.log(opt.dataset);
+          //   return opt;
+          // }
+        },
         restore: {},
         saveAsImage: {}
       }
@@ -133,10 +172,7 @@
         color: ['lightskyblue', 'yellow', 'orangered']
       }
     },
-    dataset: {
-      dimensiosns: ['name', 'value'],
-      source: toRaw(mapStore.curChart)
-    },
+
     series: [
       {
         name: '中国省级人口迁移总览',
@@ -157,7 +193,8 @@
           label: {
             show: true
           }
-        }
+        },
+        datasetIndex: 0
       }
       // randomPieSeries(eg.features[1].properties.center, 10)
     ]
@@ -176,11 +213,10 @@
     myChart.on('selectchanged', (param: any) => {
       //param.selected[0].dataIndex[0]
       const index = param.selected[0] && param.selected[0].dataIndex[0];
-      // console.log(index);
+      console.log(index);
       mapStore.setCity(index);
       myChart.dispose();
       // initCharts();
-
       // myChart.setOption(option, true);
       // myChart.dispatchAction({ type: 'select', dataIndex: index });
     });
@@ -207,7 +243,40 @@
           left: 'right',
           top: 'center',
           feature: {
-            dataView: { readOnly: false },
+            dataView: {
+              readOnly: false
+              // optionToContent: (opt: any) => {
+              //   // return toRaw(mapStore.curChart);
+              //   let source = opt.dataset.source;
+              //   let series = opt.dataset.dimensiosns;
+              //   let table =
+              //     '<table style="width:100%;text-align:center"><tbody><tr>' +
+              //     '<td>' +
+              //     series[0] +
+              //     '</td>' +
+              //     '<td>' +
+              //     series[1] +
+              //     '</td>' +
+              //     '</tr>';
+              //   for (var i = 0, l = source.length; i < l; i++) {
+              //     table +=
+              //       '<tr>' +
+              //       '<td>' +
+              //       source[i][0] +
+              //       '</td>' +
+              //       '<td>' +
+              //       source[i][1] +
+              //       '</td>' +
+              //       '</tr>';
+              //   }
+              //   table += '</tbody></table>';
+              //   return table;
+              //   // return JSON.stringify(toRaw(mapStore.curChart));
+              // },
+              // contentToOption: (container: HTMLElement, opt: any) => {
+              //   return opt;
+              // }
+            },
             restore: {},
             saveAsImage: {}
           }
@@ -246,7 +315,8 @@
               label: {
                 show: true
               }
-            }
+            },
+            datasetIndex: 0
           }
           // randomPieSeries(eg.features[1].properties.center, 10)
         ]
@@ -257,70 +327,6 @@
     }
   );
 
-  watch(
-    () => mapStore.isIn,
-    () => {
-      option = {
-        title: {
-          subtext: '数据来源于中国国家统计局',
-          sublink: 'http://www.stats.gov.cn/'
-        },
-        tooltip: {
-          trigger: 'item',
-          formatter: '{b}<br/>{c} 人'
-        },
-        toolbox: {
-          show: true,
-          orient: 'vertical',
-          left: 'right',
-          top: 'center',
-          feature: {
-            dataView: { readOnly: false },
-            restore: {},
-            saveAsImage: {}
-          }
-        },
-        visualMap: {
-          min: 100,
-          max: 100000,
-          text: ['High', 'Low'],
-          realtime: false,
-          calculable: true,
-          inRange: {
-            color: ['lightskyblue', 'yellow', 'orangered']
-          }
-        },
-        dataset: {
-          dimensiosns: ['name', 'value'],
-          source: toRaw(mapStore.curChart)
-        },
-        series: [
-          {
-            name: '中国省级人口迁移总览',
-            type: 'map',
-            map: 'China',
-            selectedMode: 'single',
-            roam: true, // 是否开启平移或缩放
-            // zoom: 1, // 当前视角的缩放比例
-            scaleLimit: {
-              // 滚轮缩放的极限控制
-              min: 1,
-              max: 10
-            },
-            emphasis: {
-              label: {
-                show: true
-              }
-            }
-          }
-          // randomPieSeries(eg.features[1].properties.center, 10)
-        ]
-      };
-      console.log('change');
-      // console.log(toRaw(mapStore.curChart));
-      nextTick(() => initCharts());
-    }
-  );
   onMounted(() => {
     initCharts();
   });

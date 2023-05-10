@@ -10,7 +10,8 @@
   import { CITIES } from '@/types';
 
   const Chart = ref(null);
-  const props = defineProps(['radius', 'colorSet']);
+  const radius = 17;
+  // const props = defineProps(['radius', 'colorSet']);
   const mapStore = useMapInfoStore();
   const dataChart = ref<EChartsType>();
   echarts.use([
@@ -40,7 +41,7 @@
       {
         name: 'Access From',
         type: 'pie',
-        radius: [props.radius ? props.radius : 17, '70%'],
+        radius: [radius ? radius : 17, '70%'],
         itemStyle: {
           borderRadius: 1,
           borderColor: '#fff',
@@ -82,7 +83,7 @@
           {
             name: 'Access From',
             type: 'pie',
-            radius: [props.radius ? props.radius : 17, '70%'],
+            radius: [radius ? radius : 17, '70%'],
             itemStyle: {
               borderRadius: 1,
               borderColor: '#fff',
