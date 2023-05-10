@@ -12,6 +12,8 @@ declare module '@vue/runtime-core' {
     ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
     ElRadioButton: typeof import('element-plus/es')['ElRadioButton']
     ElRadioGroup: typeof import('element-plus/es')['ElRadioGroup']
+    ElStep: typeof import('element-plus/es')['ElStep']
+    ElTabPane: typeof import('element-plus/es')['ElTabPane']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     IconLeft1: typeof import('./src/components/icons/ol-map/iconLeft1.vue')['default']
     IconLeft2: typeof import('./src/components/icons/ol-map/iconLeft2.vue')['default']

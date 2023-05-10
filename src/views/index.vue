@@ -35,6 +35,7 @@
         <el-tab-pane label="Role" name="third">Role</el-tab-pane>
         <el-tab-pane label="Task" name="fourth">Task</el-tab-pane></Tabs
       > -->
+      <Upload />
     </div>
   </nav>
 </template>

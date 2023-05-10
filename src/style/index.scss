@@ -39,10 +39,14 @@
 //   --tabs-br: #707070;
 // }
 
+// :root {
+//   font-family: 'Microsoft YaHei', -apple-system, BlinkMacSystemFont, Helvetica Neue, PingFang SC,
+//     Source Han Sans SC, Noto Sans CJK SC, WenQuanYi Micro Hei, sans-serif !important ;
+// }
+
 body {
-  font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, PingFang SC, Microsoft YaHei,
-    Source Han Sans SC, Noto Sans CJK SC, WenQuanYi Micro Hei, sans-serif;
-  -webkit-font-smoothing: antialiased;
+  font-family: 'Microsoft YaHei', -apple-system, BlinkMacSystemFont, Helvetica Neue, PingFang SC,
+    Source Han Sans SC, Noto Sans CJK SC, WenQuanYi Micro Hei, sans-serif !important ;
   -moz-osx-font-smoothing: grayscale;
   margin: 0;
 }

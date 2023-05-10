@@ -42,7 +42,7 @@
     '#5bb181'
   ];
   const mapStore = useMapInfoStore();
-  const dimensiosns = ['name', 'value'];
+  // const dimensiosns = ['name', 'value'];
 
   // const randomPieSeries = (center, radius) => {
   //   const data = [
