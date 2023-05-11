@@ -36,6 +36,7 @@
         <el-tab-pane label="Task" name="fourth">Task</el-tab-pane></Tabs
       > -->
       <Upload />
+      <upload />
     </div>
   </nav>
 </template>

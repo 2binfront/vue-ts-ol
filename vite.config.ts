@@ -14,6 +14,8 @@ import {
 import cesium from 'vite-plugin-cesium';
 import * as path from 'path';
 
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
+
 // https://vitejs.dev/config/
 export default defineConfig({
   resolve: {
@@ -30,6 +32,10 @@ export default defineConfig({
     }),
     Components({
       resolvers: [ElementPlusResolver()]
+    }),
+    createSvgIconsPlugin({
+      iconDirs: [path.resolve(process.cwd(), 'src/assets/svg')],
+      symbolId: 'icon-[name]'
     }),
     Unocss({
       presets: [

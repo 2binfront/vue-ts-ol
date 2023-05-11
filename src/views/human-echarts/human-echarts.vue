@@ -186,12 +186,10 @@
           min: 1,
           max: 10
         },
+
         emphasis: {
           itemStyle: {
             areaColor: '#f3f3f3'
-          },
-          label: {
-            show: true
           }
         },
         datasetIndex: 0
@@ -308,12 +306,12 @@
               min: 1,
               max: 10
             },
+            // label: {
+            //   show: true
+            // },
             emphasis: {
               itemStyle: {
                 areaColor: '#f3f3f3'
-              },
-              label: {
-                show: true
               }
             },
             datasetIndex: 0
