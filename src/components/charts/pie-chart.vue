@@ -33,6 +33,14 @@
         color: '#fff'
       }
     },
+    legend: {
+      type: 'scroll',
+      orient: 'vertical',
+      right: 10,
+      top: 20,
+      bottom: 20,
+      data: CITIES
+    },
     dataset: {
       dimensiosns: ['name', 'value'],
       source: toRaw(mapStore.curChart)
@@ -74,6 +82,14 @@
           textStyle: {
             color: '#fff'
           }
+        },
+        legend: {
+          type: 'scroll',
+          orient: 'vertical',
+          right: 10,
+          top: 20,
+          bottom: 20,
+          data: CITIES
         },
         dataset: {
           dimensiosns: ['name', 'value'],
@@ -119,12 +135,12 @@
 </script>
 
 <template>
-  <div full frc pl pr box-border> <div id="pieChart" ref="Chart"> </div> </div>
+  <div full frc box-border> <div id="pieChart" ref="Chart"> </div> </div>
 </template>
 
 <style lang="scss" scoped>
   #pieChart {
     height: 700px;
-    width: 700px;
+    width: 1200px;
   }
 </style>

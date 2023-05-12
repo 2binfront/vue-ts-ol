@@ -8,8 +8,8 @@ import router from '@/router';
 
 import 'virtual:svg-icons-register';
 // import BlueWhaleUI from 'hhbluewhale-ui';
-// import BlueWhaleUI from 'bw-cowave-ui';
-import BlueWhaleUI from './bw-cowave-ui';
+import BlueWhaleUI from 'bw-cowave-ui';
+// import BlueWhaleUI from './bw-cowave-ui';
 
 const app = createApp(App);
 app.use(ElementPlus);
