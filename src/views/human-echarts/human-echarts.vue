@@ -42,68 +42,6 @@
     '#5bb181'
   ];
   const mapStore = useMapInfoStore();
-  // const dimensiosns = ['name', 'value'];
-
-  // const randomPieSeries = (center, radius) => {
-  //   const data = [
-  //     '北京市',
-  //     '天津市',
-  //     '河北省',
-  //     '山西省',
-  //     '内蒙古自治区',
-  //     '辽宁省',
-  //     '吉林省',
-  //     '黑龙江省',
-  //     '上海市',
-  //     '江苏省',
-  //     '浙江省',
-  //     '安徽省',
-  //     '福建省',
-  //     '江西省',
-  //     '山东省',
-  //     '河南省',
-  //     '湖北省',
-  //     '湖南省',
-  //     '广东省',
-  //     '广西壮族自治区',
-  //     '海南省',
-  //     '重庆市',
-  //     '四川省',
-  //     '贵州省',
-  //     '云南省',
-  //     '西藏自治区',
-  //     '陕西省',
-  //     '甘肃省',
-  //     '青海省',
-  //     '宁夏回族自治区',
-  //     '新疆维吾尔自治区',
-  //     '台湾省',
-  //     '香港特别行政区',
-  //     '澳门特别行政区'
-  //   ].map((t) => {
-  //     return {
-  //       value: Math.round(Math.random() * 100),
-  //       name: 'Category ' + t
-  //     };
-  //   });
-  //   return {
-  //     type: 'pie',
-  //     coordinateSystem: 'geo',
-  //     tooltip: {
-  //       formatter: '{b}: {c} ({d}%)'
-  //     },
-  //     label: {
-  //       show: false
-  //     },
-  //     labelLine: {
-  //       show: false
-  //     },
-  //     animationDuration: 0,
-  //     radius,
-  //     center,
-  //     data
-  //   };
-  // };
   let option = {
     title: {
       subtext: '数据来源于中国国家统计局',
@@ -125,38 +63,6 @@
       feature: {
         dataView: {
           readOnly: false
-          // optionToContent: (opt: any) => {
-          //   // return toRaw(mapStore.curChart);
-          //   // let source = toRaw(mapStore.curChart);
-          //   // let series = dimensiosns;
-          //   // let table =
-          //   //   '<table style="width:100%;text-align:center"><tbody><tr>' +
-          //   //   '<td>' +
-          //   //   series[0] +
-          //   //   '</td>' +
-          //   //   '<td>' +
-          //   //   series[1] +
-          //   //   '</td>' +
-          //   //   '</tr>';
-          //   // for (var i = 0, l = source.length; i < l; i++) {
-          //   //   table +=
-          //   //     '<tr>' +
-          //   //     '<td>' +
-          //   //     source[i][0] +
-          //   //     '</td>' +
-          //   //     '<td>' +
-          //   //     source[i][1] +
-          //   //     '</td>' +
-          //   //     '</tr>';
-          //   // }
-          //   // table += '</tbody></table>';
-          //   // return table;
-          //   // return JSON.stringify(toRaw(mapStore.curChart));
-          // }
-          // contentToOption: (container: HTMLElement, opt: any) => {
-          //   console.log(opt.dataset);
-          //   return opt;
-          // }
         },
         restore: {},
         saveAsImage: {}
@@ -209,14 +115,10 @@
     //   console.log('hello roam');
     // });
     myChart.on('selectchanged', (param: any) => {
-      //param.selected[0].dataIndex[0]
       const index = param.selected[0] && param.selected[0].dataIndex[0];
       console.log(index);
       mapStore.setCity(index);
       myChart.dispose();
-      // initCharts();
-      // myChart.setOption(option, true);
-      // myChart.dispatchAction({ type: 'select', dataIndex: index });
     });
 
     window.addEventListener('resize', function () {
@@ -320,7 +222,6 @@
         ]
       };
       console.log('change');
-      // console.log(toRaw(mapStore.curChart));
       nextTick(() => initCharts());
     }
   );

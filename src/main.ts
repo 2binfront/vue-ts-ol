@@ -5,6 +5,7 @@ import ElementPlus from 'element-plus';
 import './style/index.scss';
 import { createPinia } from 'pinia';
 import router from '@/router';
+// import HighchartsVue from 'highcharts-vue';
 
 import 'virtual:svg-icons-register';
 // import BlueWhaleUI from 'hhbluewhale-ui';
@@ -15,7 +16,7 @@ const app = createApp(App);
 app.use(ElementPlus);
 app.use(createPinia());
 app.use(router);
-
+// app.use(HighchartsVue);
 app.use(BlueWhaleUI);
 
 app.mount('#app');

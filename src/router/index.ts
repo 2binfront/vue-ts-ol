@@ -23,8 +23,8 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/human-map/human-map.vue')
   },
   {
-    path: '/human-map-loca',
-    component: () => import('@/views/loka-map/loka-map.vue')
+    path: '/human-map-highcharts',
+    component: () => import('@/views/highcharts-map/highcharts-map.vue')
   },
   {
     path: '/human-echarts',
