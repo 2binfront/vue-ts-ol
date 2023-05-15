@@ -16,10 +16,17 @@
   const mapStore = useMapInfoStore();
 
   let flow: any = [];
+  const rangeWeight = ref([0, 300000]);
+  const rangeWidth = ref([4, 30]);
+  // const maxW = ref(100);
+  // const minW = ref(5);
+  let max = 0;
   const updateFlow = () => {
     flow = [];
     if (mapStore.isIn) {
       for (const each of mapStore.curChart) {
+        if (each[1] > max) max = each[1];
+        if (each[1] < rangeWeight.value[0] || each[1] > rangeWeight.value[1]) continue;
         flow.push({
           from: each[0],
           to: CITIES[mapStore.curCity],
@@ -35,6 +42,8 @@
       }
     } else {
       for (const each of mapStore.curChart) {
+        if (each[1] > max) max = each[1];
+        if (each[1] < rangeWeight.value[0] || each[1] > rangeWeight.value[1]) continue;
         flow.push({
           from: CITIES[mapStore.curCity],
           to: each[0],
@@ -49,12 +58,11 @@
         });
       }
     }
+    console.log(max);
   };
   updateFlow();
 
-  const maxW = ref(100);
-  const minW = ref(5);
-  const curve = ref(0);
+  const curve = ref(0.2);
   const growNum = ref(0);
   const grow = computed(() => (growNum.value ? true : false));
 
@@ -170,8 +178,8 @@
             },
             description: 'This is a map showing where early humans migrated.'
           },
-          minWidth: minW.value,
-          maxWidth: maxW.value,
+          minWidth: rangeWidth.value[0],
+          maxWidth: rangeWidth.value[1],
           growTowards: grow.value,
           curveFactor: curve.value,
           fillColor: color.value,
@@ -190,51 +198,26 @@
   };
 
   watch(
-    () => minW.value,
+    [() => rangeWidth, rangeWeight, curve, grow],
     () => {
       console.log('success');
       updateFlow();
       nextTick(() => initHighchart());
+    },
+    {
+      deep: true
     }
   );
+
   watch(
-    () => maxW.value,
+    () => [color, linecolor],
     () => {
       console.log('success');
       updateFlow();
       nextTick(() => initHighchart());
-    }
-  );
-  watch(
-    () => curve.value,
-    () => {
-      console.log('success');
-      updateFlow();
-      nextTick(() => initHighchart());
-    }
-  );
-  watch(
-    () => grow.value,
-    () => {
-      console.log('success');
-      updateFlow();
-      nextTick(() => initHighchart());
-    }
-  );
-  watch(
-    () => color.value,
-    () => {
-      console.log('success');
-      updateFlow();
-      nextTick(() => initHighchart());
-    }
-  );
-  watch(
-    () => linecolor.value,
-    () => {
-      console.log('success');
-      updateFlow();
-      nextTick(() => initHighchart());
+    },
+    {
+      deep: true
     }
   );
   watch(
@@ -253,26 +236,34 @@
 
 <template>
   <!-- <div id="map" class="map-container"> </div> -->
-  <div style="height: calc(100vh - 40px); width: 100%; overflow: hidden" relative>
+  <div
+    class="hightcharts-map"
+    style="height: calc(100vh - 40px); width: 100%; overflow: hidden"
+    relative
+  >
     <el-collapse class="w-[500px] top-[10px] left-[42px] z-99" absolute>
       <el-collapse-item title="迁移流设置" name="1">
-        <div class="slider-block" pl pr>
+        <!-- <div class="slider-block" pl pr>
           <span class="demonstration">迁移流最小宽度</span>
           <el-slider v-model="minW" show-input />
         </div>
         <div class="slider-block" pl pr>
           <span class="demonstration">迁移流最大宽度</span>
           <el-slider v-model="maxW" :max="500" show-input />
+        </div> -->
+        <div class="slider-block" pl pr>
+          <span class="demonstration">迁移流宽度范围</span>
+          <el-slider v-model="rangeWidth" range show-stops :step="0.5" :max="150" />
         </div>
         <div class="slider-block" pl pr>
           <span class="demonstration">迁移流曲度</span>
           <el-slider v-model="curve" :max="3" :step="0.1" show-input />
         </div>
         <div class="slider-block" pl pr flex flex-col>
-          <span class="demonstration">迁移流箭头样式</span>
+          <span class="demonstration">单个迁移流箭头样式</span>
           <el-radio-group v-model="growNum" block>
+            <el-radio :label="0">首尾等宽(默认)</el-radio>
             <el-radio :label="1">宽度递增</el-radio>
-            <el-radio :label="0">等宽(默认)</el-radio>
           </el-radio-group>
         </div>
         <div class="slider-block" pl pr>
@@ -282,6 +273,17 @@
         <div class="slider-block" pl pr>
           <span class="demonstration">迁移流外边线颜色</span>
           <el-color-picker v-model="linecolor" show-alpha :predefine="predefineColors" />
+        </div>
+        <div v-if="mapStore.curCity < 31" class="slider-block" pl pr>
+          <span class="demonstration">迁移流过滤(每条迁移流人数)</span>
+          <div frb
+            ><span style="white-space: nowrap" mr-4>下界</span>
+            <el-slider v-model="rangeWeight[0]" :max="300000" show-input />
+          </div>
+          <div frb
+            ><span style="white-space: nowrap" mr-4>上界</span
+            ><el-slider v-model="rangeWeight[1]" :max="300000" show-input />
+          </div>
         </div>
       </el-collapse-item>
     </el-collapse>
@@ -297,6 +299,10 @@
 </template>
 
 <style lang="scss" scoped>
-  :deep(#container) {
+  .hightcharts-map {
+    :deep(.el-collapse-item__wrap) {
+      background-color: #f3f3f3;
+      padding: 1rem 1rem 0 1rem;
+    }
   }
 </style>
