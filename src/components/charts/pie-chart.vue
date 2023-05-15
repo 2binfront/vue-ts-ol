@@ -11,7 +11,6 @@
 
   const Chart = ref(null);
   const radius = 17;
-  // const props = defineProps(['radius', 'colorSet']);
   const mapStore = useMapInfoStore();
   const dataChart = ref<EChartsType>();
   echarts.use([
@@ -22,56 +21,57 @@
     CanvasRenderer,
     LabelLayout
   ]);
-  let option = {
-    tooltip: {
-      trigger: 'item',
-      position: 'right',
-      formatter: '{c}人',
-      backgroundColor: '#45474b',
-      borderWidth: 0,
-      textStyle: {
-        color: '#fff'
-      }
-    },
-    legend: {
-      type: 'scroll',
-      orient: 'vertical',
-      right: 10,
-      top: 20,
-      bottom: 20,
-      data: CITIES
-    },
-    dataset: {
-      dimensiosns: ['name', 'value'],
-      source: toRaw(mapStore.curChart)
-    },
-    series: [
-      {
-        name: 'Access From',
-        type: 'pie',
-        radius: [radius ? radius : 17, '70%'],
-        itemStyle: {
-          borderRadius: 1,
-          borderColor: '#fff',
-          borderWidth: 2
+  let option: any;
+  const newOption = () => {
+    if (mapStore.isCountry) {
+      option = {
+        tooltip: {
+          trigger: 'item',
+          position: 'right',
+          formatter: '{c}人',
+          backgroundColor: '#45474b',
+          borderWidth: 0,
+          textStyle: {
+            color: '#fff'
+          }
         },
-        label: {
-          show: true
+        legend: {
+          type: 'scroll',
+          orient: 'vertical',
+          right: 10,
+          top: 20,
+          bottom: 20,
+          data: CITIES
         },
-        labelLayout: {
-          hideOverlap: false
+        dataset: {
+          dimensiosns: ['name', 'value'],
+          source: toRaw(mapStore.chartLocal)
+        },
+        series: [
+          {
+            name: 'Access From',
+            type: 'pie',
+            radius: [radius ? radius : 17, '70%'],
+            itemStyle: {
+              borderRadius: 1,
+              borderColor: '#fff',
+              borderWidth: 2
+            },
+            label: {
+              show: true
+            },
+            labelLayout: {
+              hideOverlap: false
+            }
+          }
+        ],
+        // color: props.colorSet ? props.colorSet : ['#e6584f', '#f79045', '#8e9aff', '#3ac096'],
+        title: {
+          text: `全国人口迁${mapStore.isIn ? '入' : '出'}概览`,
+          x: 'center'
         }
-      }
-    ],
-    // color: props.colorSet ? props.colorSet : ['#e6584f', '#f79045', '#8e9aff', '#3ac096'],
-    title: {
-      text: `${CITIES[mapStore.curCity]}人口迁${mapStore.isIn ? '入' : '出'}概览`,
-      x: 'center'
-    }
-  };
-  watch(
-    () => mapStore.curChart,
-    () => {
+      };
+    } else {
       option = {
         tooltip: {
           trigger: 'item',
@@ -119,13 +119,20 @@
           x: 'center'
         }
       };
+    }
+  };
+
+  watch(
+    () => mapStore.curChart,
+    () => {
+      newOption();
       dataChart.value!.setOption(option);
     }
   );
 
   onMounted(() => {
     dataChart.value = echarts.init(Chart.value! as HTMLElement);
-
+    newOption();
     option && dataChart.value.setOption(option);
 
     window.addEventListener('resize', () => {

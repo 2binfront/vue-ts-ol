@@ -54,6 +54,9 @@
           <el-radio-button label="2020">2015-2020</el-radio-button>
         </el-radio-group>
       </div>
+      <div v-if="$route.path !== '/'" absolute style="right: 400px; top: 37px; z-index: 10">
+        <el-button @click="mapStore.switchtoCountry">查看全国</el-button>
+      </div>
       <div v-if="$route.path !== '/'" absolute style="right: 176px; top: 37px; z-index: 10">
         <el-select v-model="value" placeholder="当前城市" @change="mapStore.setCity">
           <el-option

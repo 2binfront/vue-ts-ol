@@ -20,45 +20,94 @@
   const rangeWidth = ref([4, 30]);
   // const maxW = ref(100);
   // const minW = ref(5);
-  let max = 0;
+  // let max = 0;
   const updateFlow = () => {
     flow = [];
-    if (mapStore.isIn) {
-      for (const each of mapStore.curChart) {
-        if (each[1] > max) max = each[1];
-        if (each[1] < rangeWeight.value[0] || each[1] > rangeWeight.value[1]) continue;
-        flow.push({
-          from: each[0],
-          to: CITIES[mapStore.curCity],
-          // curveFactor: 0.4,
-          weight: each[1],
-          growTorwards: true,
-          markerEnd: {
-            enabled: true,
-            height: 12,
-            width: 8
+    if (mapStore.isCountry) {
+      if (mapStore.isIn) {
+        for (let i = 0; i < 31; i++) {
+          for (let j = 0; j < 32; j++) {
+            if (
+              mapStore.curChart[i * 32 + j][1] < rangeWeight.value[0] ||
+              mapStore.curChart[i * 32 + j][1] > rangeWeight.value[1]
+            )
+              continue;
+            flow.push({
+              from: mapStore.curChart[i * 32 + j][0],
+              to: CITIES[i],
+              // curveFactor: 0.4,
+              weight: mapStore.curChart[i * 32 + j][1],
+              growTorwards: true,
+              markerEnd: {
+                enabled: true,
+                height: 12,
+                width: 8
+              }
+            });
           }
-        });
+        }
+      } else {
+        for (let i = 0; i < 31; i++) {
+          for (let j = 0; j < 32; j++) {
+            if (
+              mapStore.curChart[i * 32 + j][1] < rangeWeight.value[0] ||
+              mapStore.curChart[i * 32 + j][1] > rangeWeight.value[1]
+            )
+              continue;
+            flow.push({
+              from: CITIES[i],
+              to: mapStore.curChart[i * 32 + j][0],
+              // curveFactor: 0.4,
+              weight: mapStore.curChart[i * 32 + j][1],
+              growTorwards: true,
+              markerEnd: {
+                enabled: true,
+                height: 12,
+                width: 8
+              }
+            });
+          }
+        }
       }
     } else {
-      for (const each of mapStore.curChart) {
-        if (each[1] > max) max = each[1];
-        if (each[1] < rangeWeight.value[0] || each[1] > rangeWeight.value[1]) continue;
-        flow.push({
-          from: CITIES[mapStore.curCity],
-          to: each[0],
-          // curveFactor: 0.4,
-          weight: each[1],
-          growTorwards: true,
-          markerEnd: {
-            enabled: true,
-            height: 12,
-            width: 8
-          }
-        });
+      if (mapStore.isIn) {
+        for (const each of mapStore.curChart) {
+          // if (each[1] > max) max = each[1];
+          if (each[1] < rangeWeight.value[0] || each[1] > rangeWeight.value[1]) continue;
+          flow.push({
+            from: each[0],
+            to: CITIES[mapStore.curCity],
+            // curveFactor: 0.4,
+            weight: each[1],
+            growTorwards: true,
+            markerEnd: {
+              enabled: true,
+              height: 12,
+              width: 8
+            }
+          });
+        }
+      } else {
+        for (const each of mapStore.curChart) {
+          // if (each[1] > max) max = each[1];
+          if (each[1] < rangeWeight.value[0] || each[1] > rangeWeight.value[1]) continue;
+          flow.push({
+            from: CITIES[mapStore.curCity],
+            to: each[0],
+            // curveFactor: 0.4,
+            weight: each[1],
+            growTorwards: true,
+            markerEnd: {
+              enabled: true,
+              height: 12,
+              width: 8
+            }
+          });
+        }
       }
     }
-    console.log(max);
+
+    // console.log(max);
   };
   updateFlow();
 
