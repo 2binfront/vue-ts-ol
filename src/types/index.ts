@@ -36,7 +36,7 @@ const CITIES = [
   '港澳台或国外'
 ];
 
-const WCITIES = [
+const ECITIES = [
   '北京市',
   '天津市',
   '河北省',
@@ -52,7 +52,7 @@ const WCITIES = [
   '台湾省'
 ];
 const MCITIES = ['山西省', '吉林省', '黑龙江省', '安徽省', '江西省', '河南省', '湖北省', '湖南省'];
-const ECITIES = [
+const WCITIES = [
   '重庆市',
   '四川省',
   '云南省',

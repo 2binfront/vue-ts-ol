@@ -7,7 +7,7 @@
   import Exporting from 'highcharts/modules/exporting';
   import OfflineExporting from 'highcharts/modules/offline-exporting';
   import { useMapInfoStore } from '@/store/mapInfo';
-  import { CITIES, CENTERS, ALLCENTER } from '@/types';
+  import { CITIES, CENTERS, ALLCENTER, WCITIES, MCITIES } from '@/types';
   useMapCharts(Highcharts); // 将地图插件挂载到highcharts中
   HighchartsFlowMap(Highcharts); // 将flowmap插件挂载到highcharts中
   Exporting(Highcharts);
@@ -21,45 +21,116 @@
   // const maxW = ref(100);
   // const minW = ref(5);
   // let max = 0;
+  const curve = ref(0.2);
+  const growNum = ref(0);
+  const grow = computed(() => (growNum.value ? true : false));
+
+  //'rgb(205, 91, 147)'
+  const color = ref('rgba(205, 91, 147)');
+  const colorW = ref('#ff5722');
+  const colorM = ref('#4caf50');
+  const colorE = ref('#29b6f6');
+  const linecolor = ref('rgba(255, 255, 255)');
+  const linecolorW = ref('rgba(255, 255, 255)');
+  const linecolorM = ref('rgba(255, 255, 255)');
+  const linecolorE = ref('rgba(255, 255, 255)');
+  const predefineColors = ref([
+    '#ff4500',
+    '#ff8c00',
+    '#ffd700',
+    '#90ee90',
+    '#00ced1',
+    '#1e90ff',
+    '#c71585',
+    'rgba(255, 69, 0, 0.68)',
+    'rgb(255, 120, 0)',
+    'hsv(51, 100, 98)',
+    'hsva(120, 40, 94, 0.5)',
+    'hsl(181, 100%, 37%)',
+    'hsla(209, 100%, 56%, 0.73)',
+    '#c7158577'
+  ]);
+
   const updateFlow = () => {
     flow = [];
+    //第一层判断是否是全国迁入迁出流
     if (mapStore.isCountry) {
-      if (mapStore.isIn) {
-        for (let i = 0; i < 31; i++) {
-          for (let j = 0; j < 32; j++) {
-            if (
-              mapStore.curChart[i * 32 + j][1] < rangeWeight.value[0] ||
-              mapStore.curChart[i * 32 + j][1] > rangeWeight.value[1]
-            )
-              continue;
-            flow.push({
-              from: mapStore.curChart[i * 32 + j][0],
-              to: CITIES[i],
-              // curveFactor: 0.4,
-              weight: mapStore.curChart[i * 32 + j][1],
-              growTorwards: true,
-              markerEnd: {
-                enabled: true,
-                height: 12,
-                width: 8
-              }
-            });
+      //第二层判断是不是迁入流，多余
+      // if (mapStore.isIn) {
+      //两层循环，当前为全国总迁入迁出
+      // for (let i = 0; i < 31; i++) {
+      //   for (let j = 0; j < 32; j++) {
+      //     //第三层判断过滤上下界
+      //     if (
+      //       mapStore.curChart[i * 32 + j][1] < rangeWeight.value[0] ||
+      //       mapStore.curChart[i * 32 + j][1] > rangeWeight.value[1]
+      //     ) {
+      //       continue;
+      //     }
+      //     flow.push({
+      //       from: mapStore.curChart[i * 32 + j][0],
+      //       to: CITIES[i],
+      //       // curveFactor: 0.4,
+      //       weight: mapStore.curChart[i * 32 + j][1],
+      //       growTorwards: true,
+      //       markerEnd: {
+      //         enabled: true,
+      //         height: 12,
+      //         width: 8
+      //       }
+      //     });
+      //   }
+      // }
+      // }
+      //第二层判断：迁出流，多余
+      // else {
+      for (let i = 0; i < 31; i++) {
+        for (let j = 0; j < 32; j++) {
+          if (
+            mapStore.curChart[i * 32 + j][1] < rangeWeight.value[0] ||
+            mapStore.curChart[i * 32 + j][1] > rangeWeight.value[1]
+          ) {
+            continue;
           }
-        }
-      } else {
-        for (let i = 0; i < 31; i++) {
-          for (let j = 0; j < 32; j++) {
-            if (
-              mapStore.curChart[i * 32 + j][1] < rangeWeight.value[0] ||
-              mapStore.curChart[i * 32 + j][1] > rangeWeight.value[1]
-            )
-              continue;
+          if (WCITIES.includes(CITIES[i])) {
             flow.push({
               from: CITIES[i],
               to: mapStore.curChart[i * 32 + j][0],
               // curveFactor: 0.4,
               weight: mapStore.curChart[i * 32 + j][1],
               growTorwards: true,
+              fillColor: colorW.value,
+              color: linecolorW.value,
+              markerEnd: {
+                enabled: true,
+                height: 12,
+                width: 8
+              }
+            });
+          } else if (MCITIES.includes(CITIES[i])) {
+            flow.push({
+              from: CITIES[i],
+              to: mapStore.curChart[i * 32 + j][0],
+              // curveFactor: 0.4,
+              weight: mapStore.curChart[i * 32 + j][1],
+              growTorwards: true,
+              fillColor: colorM.value,
+              color: linecolorM.value,
+              markerEnd: {
+                enabled: true,
+                height: 12,
+                width: 8
+              }
+            });
+          } else {
+            flow.push({
+              from: CITIES[i],
+              to: mapStore.curChart[i * 32 + j][0],
+              // curveFactor: 0.4,
+              weight: mapStore.curChart[i * 32 + j][1],
+              growTorwards: true,
+              fillColor: colorE.value,
+              color: linecolorE.value,
               markerEnd: {
                 enabled: true,
                 height: 12,
@@ -69,8 +140,12 @@
           }
         }
       }
-    } else {
+      // }
+    }
+    //不是全国，根据当前城市计算迁入迁出情况
+    else {
       if (mapStore.isIn) {
+        //找到当前城市
         for (const each of mapStore.curChart) {
           // if (each[1] > max) max = each[1];
           if (each[1] < rangeWeight.value[0] || each[1] > rangeWeight.value[1]) continue;
@@ -80,6 +155,8 @@
             // curveFactor: 0.4,
             weight: each[1],
             growTorwards: true,
+            fillColor: color.value,
+            color: linecolor.value,
             markerEnd: {
               enabled: true,
               height: 12,
@@ -97,6 +174,8 @@
             // curveFactor: 0.4,
             weight: each[1],
             growTorwards: true,
+            fillColor: color.value,
+            color: linecolor.value,
             markerEnd: {
               enabled: true,
               height: 12,
@@ -110,30 +189,6 @@
     // console.log(max);
   };
   updateFlow();
-
-  const curve = ref(0.2);
-  const growNum = ref(0);
-  const grow = computed(() => (growNum.value ? true : false));
-
-  //'rgb(205, 91, 147)'
-  const color = ref('rgba(205, 91, 147)');
-  const linecolor = ref('rgba(255, 255, 255)');
-  const predefineColors = ref([
-    '#ff4500',
-    '#ff8c00',
-    '#ffd700',
-    '#90ee90',
-    '#00ced1',
-    '#1e90ff',
-    '#c71585',
-    'rgba(255, 69, 0, 0.68)',
-    'rgb(255, 120, 0)',
-    'hsv(51, 100, 98)',
-    'hsva(120, 40, 94, 0.5)',
-    'hsl(181, 100%, 37%)',
-    'hsla(209, 100%, 56%, 0.73)',
-    '#c7158577'
-  ]);
 
   const initHighchart = () => {
     Highcharts.mapChart('container', {
@@ -231,8 +286,8 @@
           maxWidth: rangeWidth.value[1],
           growTowards: grow.value,
           curveFactor: curve.value,
-          fillColor: color.value,
-          color: linecolor.value,
+          // fillColor: color.value,
+          // color: linecolor.value,
           states: {
             hover: {
               color: '#777777',
@@ -259,7 +314,7 @@
   );
 
   watch(
-    () => [color, linecolor],
+    () => [color, linecolor, colorE, colorM, colorW, linecolorE, linecolorM, linecolorW],
     () => {
       console.log('success');
       updateFlow();
@@ -315,14 +370,43 @@
             <el-radio :label="1">宽度递增</el-radio>
           </el-radio-group>
         </div>
-        <div class="slider-block" pl pr>
-          <span class="demonstration">迁移流填充色</span>
-          <el-color-picker v-model="color" show-alpha :predefine="predefineColors" />
-        </div>
-        <div class="slider-block" pl pr>
-          <span class="demonstration">迁移流外边线颜色</span>
-          <el-color-picker v-model="linecolor" show-alpha :predefine="predefineColors" />
-        </div>
+
+        <template v-if="mapStore.isCountry">
+          <div class="slider-block" pl pr>
+            <span class="demonstration">西部迁移流填充色</span>
+            <el-color-picker v-model="colorW" show-alpha :predefine="predefineColors" />
+          </div>
+          <div class="slider-block" pl pr>
+            <span class="demonstration">中部迁移流填充色</span>
+            <el-color-picker v-model="colorM" show-alpha :predefine="predefineColors" />
+          </div>
+          <div class="slider-block" pl pr>
+            <span class="demonstration">东部迁移流填充色</span>
+            <el-color-picker v-model="colorE" show-alpha :predefine="predefineColors" />
+          </div>
+          <div class="slider-block" pl pr>
+            <span class="demonstration">西部迁移流外边线颜色</span>
+            <el-color-picker v-model="linecolorW" show-alpha :predefine="predefineColors" />
+          </div>
+          <div class="slider-block" pl pr>
+            <span class="demonstration">中部迁移流外边线颜色</span>
+            <el-color-picker v-model="linecolorM" show-alpha :predefine="predefineColors" />
+          </div>
+          <div class="slider-block" pl pr>
+            <span class="demonstration">东部迁移流外边线颜色</span>
+            <el-color-picker v-model="linecolorE" show-alpha :predefine="predefineColors" />
+          </div>
+        </template>
+        <template v-else>
+          <div class="slider-block" pl pr>
+            <span class="demonstration">迁移流填充色</span>
+            <el-color-picker v-model="color" show-alpha :predefine="predefineColors" />
+          </div>
+          <div class="slider-block" pl pr>
+            <span class="demonstration">迁移流外边线颜色</span>
+            <el-color-picker v-model="linecolor" show-alpha :predefine="predefineColors" /> </div
+        ></template>
+
         <div v-if="mapStore.curCity < 31" class="slider-block" pl pr>
           <span class="demonstration">迁移流过滤(每条迁移流人数)</span>
           <div frb
