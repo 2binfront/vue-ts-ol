@@ -7,7 +7,7 @@
   import Exporting from 'highcharts/modules/exporting';
   import OfflineExporting from 'highcharts/modules/offline-exporting';
   import { useMapInfoStore } from '@/store/mapInfo';
-  import { CITIES, CENTERS, ALLCENTER, WCITIES, MCITIES } from '@/types';
+  import { CITIES, ALLCENTER, WCITIES, MCITIES } from '@/types';
   useMapCharts(Highcharts); // 将地图插件挂载到highcharts中
   HighchartsFlowMap(Highcharts); // 将flowmap插件挂载到highcharts中
   Exporting(Highcharts);
